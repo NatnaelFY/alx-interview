@@ -1,45 +1,31 @@
 #!/usr/bin/python3
-""" Checks if all boxes are unlockable """
+""" a function that checks if all the boxes can be opened
+Parameters
+----------
+boxes : list
+    list of lists that might contain keys to the other boxes
+Returns
+-------
+boolean
+    True if all the boxes can be opend, else False
+"""
 
 
 def canUnlockAll(boxes):
     """
-    Function for checking if all boxes
-    are unlockable
+    determine opened boxes
     """
-    open_close = []
-    current = []
-    size = len(boxes)
-    boxes_index = []
-    # Populating the boxes_index
-    # This list will later be used
-    # to identify if all boxes are open
-    for index in range(len(boxes)):
-        boxes_index.append(index)
-    if size == 1:
-        return True  # The first box is always open
-    # Populating current
-    # Checking if the first box does not have any keys
-    if len(boxes[0]) == 0:
+    num_box = len(boxes)
+    box_state = [False for x in range(num_box)]
+    box_state[0] = True
+    for i in range(num_box):
+        for j in range(len(boxes[i])):
+            try:
+                if boxes[i][j] != i and box_state[boxes[i][j]] is False:
+                    box_state[boxes[i][j]] = True
+            except IndexError:
+                continue
+    if False in box_state:
         return False
-    for key in boxes[0]:
-        current.append(key)
-
-    index = 0
-    while index < len(current):
-        value = boxes[current[index]]
-        if (len(value) != 0):
-            for item in value:
-                if current.count(item) == 0:
-                    current.append(item)
-        index += 1
-    # Appending 0 to current, so that the comparison can be
-    # done correctly. This does not have any logical issues
-    # as box 0 is always open.
-    # Checking if 0 does not exist in current
-    if current.count(0) == 0:
-        current.append(0)
-    if (sorted(current) == sorted(boxes_index)):
-        return True
     else:
-        return False
+        return True
