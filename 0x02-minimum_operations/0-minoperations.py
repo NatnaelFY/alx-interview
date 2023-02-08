@@ -6,6 +6,7 @@
 
 
 def minOperations(n):
+    
     d = n // 2
     while d > 0:
         q, r = divmod(n, d)
