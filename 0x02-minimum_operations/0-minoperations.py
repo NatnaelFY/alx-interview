@@ -1,16 +1,17 @@
 #!/usr/bin/python3
 
+
 """
-0. Minimum Operations
+Function that calculates the min operations to copy and paste letters
 """
 
 
 def minOperations(n):
-    
-    d = n // 2
-    while d > 0:
-        q, r = divmod(n, d)
-        if (r == 0):
-            return q + minOperations(d)
-        d -= 1
-    return 0
+    nOpe = 0
+    minOpe = 2
+    while n > 1:
+        while n % minOpe == 0:
+            nOpe += minOpe
+            n /= minOpe
+        minOpe += 1
+    return nOpe
